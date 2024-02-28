@@ -7,7 +7,7 @@ def main():
     ...
     
 
-@click.command()
+@main.command()
 def install_driver():
     install_web_driver()
     
