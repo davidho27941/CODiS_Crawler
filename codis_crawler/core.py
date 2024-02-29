@@ -11,6 +11,7 @@ from .utils import (
     get_element,
 )
 
+
 class seleniumCrawler:
     def __init__(
         self,
@@ -207,6 +208,7 @@ class seleniumCrawler:
             self.driver.quit()
         except Exception as e:
             raise (e)
+
 
 class httpxCrawler:
     def __init__(self, url: str, **kwargs: dict[str, str]) -> None:
