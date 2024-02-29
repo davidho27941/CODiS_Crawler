@@ -207,3 +207,12 @@ class seleniumCrawler:
             self.driver.quit()
         except Exception as e:
             raise (e)
+
+class httpxCrawler:
+    def __init__(self, url: str, **kwargs: dict[str, str]) -> None:
+        self.url = "https://codis.cwb.gov.tw/apistation"
+        self.kwargs = kwargs
+
+    def get_weather_data(self):
+        with httpx.Client() as client:
+            ...
