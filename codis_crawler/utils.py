@@ -64,4 +64,4 @@ def get_element(
     else:
         target_driver_object = driver_obj.find_element(ref, target)
 
-    return driver_obj, target_driver_object
+    return target_driver_object
