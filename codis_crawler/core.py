@@ -104,8 +104,8 @@ class seleniumCrawler:
 
         open_button.click()
 
-        if dashboard.get_attribute("style") == "display: none;":
-            open_button.click()
+        # if dashboard.get_attribute("style") == "display: none;":
+        #     open_button.click()
 
     def get_download_panel(self):
         download_parent = get_element(
