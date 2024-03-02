@@ -2,8 +2,10 @@ import time
 import httpx
 import calendar
 from typing import Any
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
+from selenium.common import NoSuchElementException
 
 from .utils import (
     create_webdriver,
@@ -38,6 +40,7 @@ class seleniumCrawler:
         driver = create_webdriver(mode, headless=headless, remote_url=remote_url)
 
         self.driver = create_connection(driver)
+        self.wait = WebDriverWait(self.driver, timeout=5)
 
     def setup_area(self):
         area_row = get_element(
@@ -95,14 +98,12 @@ class seleniumCrawler:
             "XPATH",
             f"//button[contains(@class, 'show_stn_tool') and contains(@data-stn_id, '{self.target_station}')]",
         )
-        open_button.click()
-
         dashboard = get_element(
             self.driver, "XPATH", "//section[@class='lightbox-tool']"
         )
 
-        # Click button again if dashboard not displayed.
-        # TODO: change to explicit waits
+        open_button.click()
+
         if dashboard.get_attribute("style") == "display: none;":
             open_button.click()
 
@@ -170,38 +171,35 @@ class seleniumCrawler:
 
     def setup_websit(self):
         self.setup_area()
-        self.driver.implicitly_wait(5)
         if self.target_city is not None:
             self.setup_city()
-            self.driver.implicitly_wait(5)
         self.setup_station()
-        self.driver.implicitly_wait(5)
 
     def open_dashboard(self):
         self.click_map_icon()
-        self.driver.implicitly_wait(2)
         self.click_open_dashboard()
-        self.driver.implicitly_wait(2)
 
     def choose_and_download(self):
 
-        download_panel = self.get_download_panel()
-        self.driver.implicitly_wait(2)
+        # Try to get download panel from dashboard, if dashboard not exits
+        # execute the `self.click_open_dashboard()` again.
+        try:
+            download_panel = self.get_download_panel()
+        except NoSuchElementException:
+            self.click_open_dashboard()
 
         if self.targte_date is not None:
             self.setup_datetime(download_panel)
 
-        self.driver.implicitly_wait(2)
         self.download(download_panel)
 
     def get_weather_data(self):
         try:
             self.setup_websit()
             print("Stage 1 done.")
-            self.driver.implicitly_wait(2)
+            time.sleep(2)
             self.open_dashboard()
             print("Stage 2 done.")
-            self.driver.implicitly_wait(2)
             self.choose_and_download()
             time.sleep(3)
             print("Stage 3 done.")
