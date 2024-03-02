@@ -2,7 +2,7 @@
 
 ## Introduction 
 
-This is a `selenium`` based web crawler. This crawler aim to download the weather data from CODiS platform.
+This is a `selenium` based web crawler. This crawler aim to download the weather data from CODiS platform.
 
 > A `httpx` based solution will also be provided in future version.
 
