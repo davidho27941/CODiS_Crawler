@@ -2,6 +2,7 @@ import click
 
 from .core import (
     seleniumCrawler,
+    httpxCrawler,
 )
 from .utils import install_web_driver
 
@@ -75,6 +76,17 @@ def selenium_crawler(
         target_city=city,
         remote_url=url,
     )
+    crawler.get_weather_data()
+
+
+@main.command()
+@click.option(
+    "--station", "station", type=str, required=True, help="The id of station."
+)
+@click.option("--date", "date", type=str, default=None, help="The date to download.")
+def httpx_crawler(station, date):
+    crawler = httpxCrawler(target_station=station, target_date=date)
+
     crawler.get_weather_data()
 
 
