@@ -1,6 +1,8 @@
 import time
+import json
 import httpx
 import calendar
+import pandas as pd
 from typing import Any
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
@@ -209,10 +211,46 @@ class seleniumCrawler:
 
 
 class httpxCrawler:
-    def __init__(self, url: str, **kwargs: dict[str, str]) -> None:
-        self.url = "https://codis.cwb.gov.tw/apistation"
-        self.kwargs = kwargs
+    def __init__(self, *, target_station: str, target_date: str) -> None:
+        self.url = "https://codis.cwb.gov.tw/api/station"
+
+        stn_prefix = target_station[:2]
+
+        self.target_station = target_station
+        self.target_date = target_date
+
+        date = f"{target_date}T00:00:00.000+08:00"
+        start = f"{target_date}T00:00:00"
+        end = f"{target_date}T23:59:59"
+
+        match stn_prefix:
+            case "46":
+                stn_type = "cwb"
+            case "C1":
+                stn_type = "auto_C1"
+            case "C0":
+                stn_type = "auto_C0"
+            case _:
+                stn_type = "agr"
+
+        self.data = {
+            "type": "report_date",
+            "more": "",
+            "item": "",
+            "stn_type": stn_type,
+            "date": date,
+            "start": start,
+            "end": end,
+            "stn_ID": self.target_station,
+        }
 
     def get_weather_data(self):
         with httpx.Client() as client:
-            ...
+            client.get(self.url)
+
+            response: httpx.Response = client.post(self.url, data=self.data)
+
+            with open(
+                f"{self.target_station}_{self.target_date}.json", "w", encoding="utf-8"
+            ) as file:
+                json.dump(response.json(), file, ensure_ascii=True, indent=4)
