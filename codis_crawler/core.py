@@ -205,9 +205,10 @@ class seleniumCrawler:
             self.choose_and_download()
             time.sleep(3)
             print("Stage 3 done.")
-            self.driver.quit()
         except Exception as e:
             raise (e)
+        finally:
+            self.driver.quit()
 
 
 class httpxCrawler:
