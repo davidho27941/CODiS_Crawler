@@ -19,5 +19,9 @@ setuptools.setup(
     ],
     python_requires='>=3.10.0',
     install_requires=[
+        "click==8.1.7",
+        "httpx==0.27.0",
+        "selenium==4.18.1",
+        "webdriver-manager==4.0.1",
     ]
 )
