@@ -69,3 +69,35 @@ When using httpx-based approach, target date must be provided.
 The script will download a json from the CODiS API.
 
 Caution: The JSON data contains the raw information response by the API. The raw data is much different compare to the data shown in dashboard.
+
+## Remote Executor via docker 
+
+We provide an alternative way for selenium-based approch: execute via remote chrome executor. To use this method, you must install docker and run a `selenium/standalone-chrome` container as a remote executor.
+
+### Prepare executor
+
+To get your file, you must mount a folder into the container. Create a folder and change its permission before start a container:
+
+```
+mkdir /home/ubuntu/files
+chown 1200:1201 /home/ubuntu/files
+```
+
+Then start a container using the following command:
+
+```
+docker run -d -p 4444:4444 --shm-size="2g" -v /home/ubuntu/files:/home/seluser/Downloads selenium/standalone-chrome:4.18.1-20240224
+```
+
+
+Please make sure you change the permission, otherwise the file cannot be writed into the correct place.
+
+### Download via remote executor
+
+Run the script with the following command for remote executor:
+
+```
+python -m codis_crawler selenium-crawler --station 467490 --mode remote --url http://127.0.0.1/wd/hub
+```
+
+> For more information, please visit the selenium [repository](https://github.com/SeleniumHQ/docker-selenium).
