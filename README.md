@@ -36,6 +36,8 @@ python -m codis_crawler install-driver
 
 ## Usage
 
+Due to the network latency and other issues, sometime the element will not appears as expected. If there is an error occur, try to execute the script again.
+
 ### Download vis selenium-based approach
 
 When using this approach, the script will interact with CODiS via web driver and selenium. The script will input the informations, open the popup dashboard, then click the download button. A `csv` file will be downlaoded if the script executed without error.
