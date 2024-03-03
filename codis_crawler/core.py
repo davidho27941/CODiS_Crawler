@@ -2,7 +2,6 @@ import time
 import json
 import httpx
 import calendar
-import pandas as pd
 from typing import Any
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
