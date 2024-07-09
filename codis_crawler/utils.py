@@ -43,7 +43,7 @@ def create_webdriver(mode: str, headless=False, remote_url=None) -> Callable:
 
 
 def create_connection(driver: Callable) -> Callable:
-    driver.get("https://codis.cwb.gov.tw/StationData")
+    driver.get("https://codis.cwa.gov.tw/StationData")
     return driver
 
 
