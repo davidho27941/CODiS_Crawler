@@ -77,12 +77,12 @@ class seleniumCrawler:
         city_selector.click()
 
     def setup_station(self):
-        station_parent_element = get_element(self.driver, "CLASS_NAME", "input-group")
+        station_parent_element = get_element(self.driver, "XPATH", "//div[@class='row' and .//*[contains(text(), '站名站號')]]")
 
         station_input_element = get_element(
             station_parent_element,
-            "CLASS_NAME",
-            "form-control",
+            "XPATH",
+            ".//input[@class='form-control']",
         )
 
         station_input_element.send_keys(self.target_station)
