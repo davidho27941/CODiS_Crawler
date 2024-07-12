@@ -77,7 +77,11 @@ class seleniumCrawler:
         city_selector.click()
 
     def setup_station(self):
-        station_parent_element = get_element(self.driver, "XPATH", "//div[@class='row' and .//*[contains(text(), '站名站號')]]")
+        station_parent_element = get_element(
+            self.driver,
+            "XPATH",
+            "//div[@class='row' and .//*[contains(text(), '站名站號')]]",
+        )
 
         station_input_element = get_element(
             station_parent_element,
