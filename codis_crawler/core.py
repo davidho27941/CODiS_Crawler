@@ -2,6 +2,9 @@ import time
 import json
 import httpx
 import calendar
+
+import pandas as pd
+
 from typing import Any
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
@@ -262,8 +265,11 @@ class httpxCrawler:
                 for dict_per_hour in data
             }
             
-            # TODO: Remove after.
-            # with open(
-            #     f"{self.target_station}_{self.target_date}.json", "w", encoding="utf-8"
-            # ) as file:
-            #     json.dump(response.json(), file, ensure_ascii=True, indent=4)
+            dataframe = (
+                pd.DataFrame(formated_data)
+                .transpose()
+                .reset_index(drop=False)
+                .rename(columns={"index": "DateTime"})
+            )
+            
+            dataframe.to_csv(f"{self.target_station}_{self.target_date}.csv", index=False)
