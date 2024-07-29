@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="codis_crawler",
-    version="0.1.0",
+    version="0.2.1",
     author="David Ho",
     author_email="davidho@gapp.nthu.edu.tw",
     description="This is a selenium based web crawler. This crawler aim to download the weather data from CODiS platform.",
