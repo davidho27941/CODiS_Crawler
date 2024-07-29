@@ -12,6 +12,7 @@ from .utils import (
     create_webdriver,
     create_connection,
     get_element,
+    parse_sub_dict,
 )
 
 
@@ -254,7 +255,13 @@ class httpxCrawler:
 
             response: httpx.Response = client.post(self.url, data=self.data)
 
+            data = response.json()['data'][0]['dts']
 
+            formated_data = {
+                dict_per_hour['DataTime']: parse_sub_dict(dict_per_hour)
+                for dict_per_hour in data
+            }
+            
             # TODO: Remove after.
             # with open(
             #     f"{self.target_station}_{self.target_date}.json", "w", encoding="utf-8"
