@@ -216,7 +216,7 @@ class seleniumCrawler:
 
 class httpxCrawler:
     def __init__(self, *, target_station: str, target_date: str) -> None:
-        self.url = "https://codis.cwb.gov.tw/api/station"
+        self.url = "https://codis.cwa.gov.tw/api/station"
 
         stn_prefix = target_station[:2]
 
