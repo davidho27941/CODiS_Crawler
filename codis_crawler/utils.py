@@ -5,7 +5,7 @@ from urllib3.exceptions import NewConnectionError
 from selenium.common.exceptions import WebDriverException
 from webdriver_manager.chrome import ChromeDriverManager
 
-from typing import Callable, Tuple
+from typing import Callable, Tuple, Any, Dict, Union
 
 
 def install_web_driver():
@@ -65,3 +65,18 @@ def get_element(
         target_driver_object = driver_obj.find_element(ref, target)
 
     return target_driver_object
+
+def parse_sub_dict(hourly_data: Dict[str, Union[float, Any]]) -> Dict: 
+    
+    del hourly_data['DataTime']
+    
+    parsed_dict = {}
+    
+    for obs_name, obs_value in hourly_data.items():
+        if len(obs_value.keys()) > 1:
+            for obs_sub_key, obs_sub_value in obs_value.items():
+                parsed_dict[f"{obs_name}_{obs_sub_key}"] = obs_sub_value
+        else:
+            parsed_dict[obs_name] = list(obs_value.values())[0]
+            
+    return parsed_dict
