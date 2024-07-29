@@ -254,7 +254,9 @@ class httpxCrawler:
 
             response: httpx.Response = client.post(self.url, data=self.data)
 
-            with open(
-                f"{self.target_station}_{self.target_date}.json", "w", encoding="utf-8"
-            ) as file:
-                json.dump(response.json(), file, ensure_ascii=True, indent=4)
+
+            # TODO: Remove after.
+            # with open(
+            #     f"{self.target_station}_{self.target_date}.json", "w", encoding="utf-8"
+            # ) as file:
+            #     json.dump(response.json(), file, ensure_ascii=True, indent=4)
