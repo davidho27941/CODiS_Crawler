@@ -68,9 +68,7 @@ When using httpx-based approach, target date must be provided.
  python -m codis_crawler httpx-crawler  --station 467490 --date <target date>
 ```
 
-The script will download a json from the CODiS API.
-
-Caution: The JSON data contains the raw information response by the API. The raw data is much different compare to the data shown in dashboard.
+The script will download a json from the CODiS API. The JSON file will be transformed in to a dataframe and export as a CSV file through a parse function.
 
 ## Remote Executor via docker 
 
